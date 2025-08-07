@@ -5,7 +5,7 @@ pipeline {
     stage('Git Clone') {
       agent { label 'fortify-sensor'}
       steps {
-        git branch: 'master', url: 'https://github.com/perarahmawati/riches-test.git' 
+        git branch: 'main', url: 'https://github.com/perarahmawati/riches-test.git' 
       } 
     }
     stage('Fortify Update') {
