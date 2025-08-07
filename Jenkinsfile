@@ -5,7 +5,7 @@ pipeline {
     stage('Git Clone') {
       agent { label 'fortify-sensor'}
       steps {
-        git branch: 'master', url: 'https://github.com/fortify/riches.git' 
+        git branch: 'master', url: 'https://github.com/perarahmawati/riches-test.git' 
       } 
     }
     stage('Fortify Update') {
@@ -38,7 +38,7 @@ pipeline {
     stage('Fortify Upload') {
       agent { label 'fortify-sensor'}
       steps {
-        fortifyUpload appName: 'riches', appVersion: '2.0', 
+        fortifyUpload appName: 'riches', appVersion: '1.0', 
           resultsFile: 'riches.fpr'
        }
     }
