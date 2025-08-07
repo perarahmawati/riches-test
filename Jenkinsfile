@@ -38,7 +38,7 @@ pipeline {
     stage('Fortify Upload') {
       agent { label 'fortify-sensor'}
       steps {
-        fortifyUpload appName: 'riches', appVersion: '1.0', 
+        fortifyUpload appName: 'riches', appVersion: '3.0', 
           resultsFile: 'riches.fpr'
        }
     }
