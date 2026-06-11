@@ -1,0 +1,45 @@
+Training PLN :
+azure_pipeline.yml
+trigger:
+- main
+
+pool:
+  name: Default
+  demands:
+    - agent.name -equals agent-253
+
+steps:
+# Menggunakan task Bash untuk menjalankan file .sh
+- task: Bash@3
+  displayName: 'Scanning SAST'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sed -i 's/\r$//' scanning-sast-with-treshold.sh
+      # Memberikan hak akses eksekusi (jika belum ada)
+      chmod +x scanning-sast-with-treshold.sh
+      
+      # Menjalankan script
+      ./scanning-sast-with-treshold.sh
+
+# Menggunakan task Bash untuk menjalankan file .sh
+- task: Bash@3
+  displayName: 'Scanning SCA'
+  inputs:
+    targetType: 'inline'
+    script: |
+      mkdir -p ./nexus-tmp
+
+      java -Djava.io.tmpdir=./nexus-tmp -jar /opt/nexus-iq-cli.jar -i sample -s https://sonatype.kikoichi.dev -a SZI2O23K:OnyWU1IQGF0V7wzNCButnAgX2DY1iqibxgThAROjqaiK requirements.txt
+
+- task: Bash@3
+  displayName: 'Scanning DAST'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sed -i 's/\r$//' scanning-dast-with-treshold.sh
+      # Memberikan hak akses eksekusi (jika belum ada)
+      chmod +x scanning-dast-with-treshold.sh
+      
+      # Menjalankan script
+      ./scanning-dast-with-treshold.sh
