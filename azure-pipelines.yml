@@ -4,7 +4,7 @@ trigger:
 pool:
   name: Default
   demands:
-    - agent.name -equals localhost
+    - agent.name -equals ubuntu
 
 steps:
 # Menggunakan task Bash untuk menjalankan file .sh
