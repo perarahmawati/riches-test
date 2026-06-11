@@ -1,5 +1,3 @@
-Training PLN :
-azure_pipeline.yml
 trigger:
 - main
 
